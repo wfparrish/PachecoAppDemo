@@ -1,0 +1,161 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/1ce9e94872.js" crossorigin="anonymous"></script>
+    <script src="js/top.js"></script>
+    <title>Sector</title>
+</head>
+<body>
+      <div class="container">
+      
+        <h1 id="title"></h1>
+        <div class="row">
+      
+          <div class="column1 left">
+      
+            <h2>Icons</h2>
+      
+            <form id="stackIcon" name="stackIcon" class="stack"  method="POST"
+              onsubmit="return false;" target="stackSaved">
+              <input type="hidden" name="left" value="">
+              <input type="hidden" name="top" value="">
+            </form>
+
+            <iframe id="stackIframe" name="stackSaved" display="none"
+              style="width:0; height:0; border:0; border:none"></iframe>
+            <iframe id="panelIframe" name="panelSaved" display="none"
+              style="width:0; height:0; border:0; border:none"></iframe>
+      
+         
+            <div id="panelIcon" class="panel"></div>
+            <div id="cornerIcon" class="corner"></div>
+      
+            <form id="dataForm" name="dataForm" class="submission-form"  method="POST"
+              target="panelSaved" style="visibility: hidden;">
+      
+              <label for="size">Size:</label>
+              <input type="text" name="size" autocomplete="off" required="required">
+              <label for="tieStrips">Tie Strips:</label>
+              <input type="text" name="tieStrips" autocomplete="off" required="required">
+              <label for="linerType">Liner Type:</label>
+              <input type="text" name="linerType" autocomplete="off" required="required">
+              <label for="dowels">Dowels:</label>
+              <input type="checkbox" name="dowels" autocomplete="off">
+              <label for="r6">R6:</label>
+              <input type="checkbox" name="r6" autocomplete="off">
+              <label for="bigTies">Big Ties:</label>
+              <input type="checkbox" name="bigTies" autocomplete="off">
+              <label for="wall">Wall:</label>
+              <input type="text" name="wall" autocomplete="off">
+              <input type="submit" value="Send">
+            </form>
+      
+            <div class="retrievedStack">
+              <ul id="stack__Ui" class="retrievedStack__slots">
+              </ul>
+            </div>
+      
+          </div>
+          <div class="column2 right">
+      
+            <h2>Storage Space</h2>
+      
+            <h2>The Well</h2>
+            <div id="well0" class="well"></div>
+      
+            <div id="control-panel" class="control-panel">
+              <div id="control-panel__btn__1" class="control-panel__button">Save New Stacks</div>
+              <div id="control-panel__btn__2" class="control-panel__button">Find Saved Panel</div>
+            </div>
+      
+          </div>
+      
+          <nav id="context-menu" class="context-menu">
+            <ul class="context-menu__items">
+              <li class="context-menu__item">
+                <div class="context-menu__link view">
+                  <i class="fa fa-eye"></i> View Stack
+                </div>
+              </li>
+              <li class="context-menu__item">
+                <div class="context-menu__link edit">
+                  <i class="fa fa-edit"></i> Edit Stack
+                </div>
+              </li>
+              <li class="context-menu__item">
+                <div class="context-menu__link delete">
+                  <i class="fa fa-trash"></i> Delete Stack
+                </div>
+              </li>
+            </ul>
+          </nav>
+      
+        </div>
+      </div>
+      
+      <nav class="nav__bar">
+        <ul class="nav__links">
+      
+          <li id="link__0" class="nav__link">
+            <div class="nav__link__badge">Home</div>
+          </li>
+          <li id="link__1" class="nav__link">
+            <div class="nav__link__badge">1</div>
+          </li>
+          <li id="link__2" class="nav__link">
+            <div class="nav__link__badge">2</div>
+          </li>
+          <li id="link__3" class="nav__link">
+            <div class="nav__link__badge">3</div>
+          </li>
+          <li id="link__4" class="nav__link">
+            <div class="nav__link__badge">4</div>
+          </li>
+          <li id="link__5" class="nav__link">
+            <div class="nav__link__badge">5</div>
+          </li>
+          <li id="link__6" class="nav__link">
+            <div class="nav__link__badge">6</div>
+          </li>
+          <li id="link__7" class="nav__link">
+            <div class="nav__link__badge">7</div>
+          </li>
+          <li id="link__8" class="nav__link">
+            <div class="nav__link__badge">8</div>
+          </li>
+          <li id="link__9" class="nav__link">
+            <div class="nav__link__badge">9</div>
+          </li>
+          <li id="link__10" class="nav__link">
+            <div class="nav__link__badge">10</div>
+          </li>
+          <li id="link__11" class="nav__link">
+            <div class="nav__link__badge">11</div>
+          </li>
+          <li id="link__12" class="nav__link">
+            <div class="nav__link__badge">12</div>
+          </li>
+          <li id="link__13" class="nav__link">
+            <div class="nav__link__badge">13</div>
+          </li>
+          <li id="link__14" class="nav__link">
+            <div class="nav__link__badge">14</div>
+          </li>
+          <li id="link__15" class="nav__link">
+            <div class="nav__link__badge">15</div>
+          </li>
+        </ul>
+      </nav>
+      
+      <script src="js/bottom.js"></script>
+    
+</body>
+</html>

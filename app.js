@@ -1,5 +1,6 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const path = require('path')
+
 
 //Routes for each sectors' stacks
 const stackRoutes = require('./routes/api/stacks');
@@ -68,20 +69,15 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 //Connect Database
 connectDB();
 
-//Set up handlebars
-const handlebars = require('express-handlebars').create({
-  defaultLayout: 'main',
-});
-app.engine('handlebars', handlebars.engine);
-app.set('view engine', 'handlebars');
+
 
 app.set('port', process.env.PORT || 3000);
 
-//CSS, clientside JS comes from here
-app.use(express.static(__dirname + '/public'));
 
 //Allows for CRUD calls for Yards, Sectors, Stacks, Panels, and Corners
 app.use(stackRoutes);
@@ -143,12 +139,12 @@ app.use(cornerRoutes15);
 
 
 app.get('/', (req, res, next) => {
-  res.render('home');
+  res.render('public/index.html');
 });
 
 app.use((req, res, next) => {
   res.status(404);
-  res.render('404');
+  res.send('404')
 });
 
 app.use((err, req, res, next) => {

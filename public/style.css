@@ -211,6 +211,16 @@ textarea {
   top: 487px;
 }
 
+#control-panel-index {
+  display: flex inline-block;
+  position: absolute;
+  height: 100px;
+  width: 130px;
+  background-color: #cccaa7;
+  left: 200px;
+  top: 50px;
+}
+
 .control-panel__button {
   display: inline-block;
   position: relative;
@@ -225,6 +235,7 @@ textarea {
   border-color: #9b985c;
   text-align: center;
   padding-top: 2px;
+  cursor: pointer;
 }
 
 .hasQueriedPanel {
@@ -233,6 +244,10 @@ textarea {
 }
 
 /* sectorMapView Styling */
+
+.sector__link {
+  cursor: pointer;
+}
 
 .sector__link__badge {
   display: block;

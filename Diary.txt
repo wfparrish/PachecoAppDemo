@@ -1,4 +1,4 @@
-Started Pacheco App 4/11/2020
+  Started Pacheco App 4/11/2020
 
 To start the server:
 nodemon app.js
@@ -2610,7 +2610,276 @@ https://medium.com/@sumantmishra/how-to-deploy-node-js-app-on-aws-with-github-db
 In order to do that, I need to complete this tutorial(recommended by the article):
 https://medium.com/@sumantmishra/securely-ssh-into-aws-ec2-linux-instance-42ad8a322ac5
 
+------------------------------------------------------------------------------------------------------------
 
+One Year Later...
+
+1/13/2022
+
+I've returned... and this time, it's personal!
+
+*********************************************************************************************************
+
+Used this tutorial to set Pacheco App up again in the AWS cloud on a stand-alone EC2:
+Tutorial: Creating and managing a Node.js server on AWS, part 1
+https://hackernoon.com/tutorial-creating-and-managing-a-node-js-server-on-aws-part-1-d67367ac5171
+
+I need to use this command to ssh into Pacheco app:
+ssh -i ~/.ssh/Pacheco_Key_Pair_AWS.pem ec2-user@ec2-52-11-87-227.us-west-2.compute.amazonaws.com
+
+when I am in this folder:
+C:\Users\willi\.ssh
+
+AND using Git Bash opened in that folder
+***********************************************************************************************************
+
+
+The connection will not stay open
+
+Next Step:
+Try this: 
+Connect to your Linux instance from Windows using PuTTY
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html
+
+------------------------------------------------------------------------------------------------------------------
+
+1/15/2021
+
+Working around the issue with the use of WSL on this desktop. 
+Going to work on Pacheco app on the laptop for now.
+Desktop cannot upgrade to Windows 11 and this is keeping me from re-installing the WSL
+
+********************************************************************************************************************
+
+Setting up the laptop to use debian
+It already has a version of WSL 2 installed
+Started by running:
+
+wsl
+
+willi@LAPTOP-5PA00TBG:/mnt/c/Users/willi$ 
+is the location that gets opened
+
+Need to know if ~/.ssh is how to go to an existing .ssh folder, or not
+
+Found this line of code 
+ls -l ~/.ssh/id*
+
+in this tutorial
+
+https://phoenixnap.com/kb/generate-ssh-key-debian-10
+
+Tells you if a .ssh folder exists
+
+The folder does not exist on the laptop.
+
+
+Opened File Explorer and ran 
+
+\\wsl$
+This opened up the Debian folder
+Dropped the Pacheco folder into the folder
+
+Code I ran to move the .pem file over to the .ssh file
+willi@LAPTOP-5PA00TBG:~$ mv ~/Pacheco_App_Key_Pair_Folder /mnt/c/Users/willi/.ssh
+
+The keys for Pacheco are inside the Pacheco_App_Key_Pair_Folder in the .ssh folder
+willi@LAPTOP-5PA00TBG:/mnt/c/Users/willi/.ssh$ 
+
+*****************************************************************************************************************
+
+Ran 
+ssh -i "Pacheco_Key_Pair_AWS.pem" ec2-user@ec2-52-11-87-227.us-west-2.compute.amazonaws.com
+did not work as I expected, there is no ssh client on my machine
+
+Started thinking I needed to install OpenSSL, but then...
+
+Found the tutorial I needed:
+
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/WSL.html
+
+However, that tutorial says that the command I ran should have worked!
+
+Found this article, maybe it will help?
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connection-prereqs.html#connection-prereqs-private-key
+
+Figured out how to install ssh using this tutorial:
+https://devconnected.com/how-to-install-and-enable-ssh-server-on-debian-10/
+
+Ran the ssh command again and got an error:
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0555 for 'Pacheco_Key_Pair_AWS.pem' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key "Pacheco_Key_Pair_AWS.pem": bad permissions
+ec2-user@ec2-52-11-87-227.us-west-2.compute.amazonaws.com: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).
+
+Think I found the answer here:
+https://superuser.com/questions/1321072/ubuntu-on-windows-10-ssh-permissions-xxxx-for-private-key-are-too-open/1343580
+
+The Windows 10 permissions vs WSL permissions problem is only a problem 
+if the .pem file is in the Windows file system accessible under a mount point, e.g. somewhere in /mnt/c .
+
+If you move the file to under your WSL home directory, e.g. directory /home/.ssh, 
+then you can do a chmod 400 yourkeyfile.pem on the file.
+
+The way WSL works, the standard Linux root directories like bin, etc, home, usr are not visible to Windows 10, 
+hence you can do a chmod on any file just as you were working on a real Linux system.
+
+
+Started over, went to 
+\\wsl$
+
+to the /home/willi/.ssh folder and place the .pem file in that folder
+Ran 
+chmod 400 Pacheco_Key_Pair_AWS.pem
+
+Moved the file back to the /mnt/c/Users/willi/.ssh/Pacheco_App_Key_Pair_Folder
+
+************************************************************************************************************************************
+
+Found the answer here to connect to the EC2
+
+https://stackoverflow.com/questions/8193768/unprotected-private-key-file-error-using-ssh-into-amazon-ec2-instance-aws?rq=1
+
+I know this question has been answered already but for those that have tried them all 
+and you are still getting the annoying "Permission denied (publickey)". Try running your command with SUDO. Of course this is a temporary solution 
+and you should set permissions correctly but at least that will let you identify that your current user is not running with the privileges you need (as you assumed)
+sudo ssh -i amazonec2.pem ec2-xxx-xxx-xxx-xxx.us-west-2.compute.amazonaws.com
+
+Once you do this you'll get a message like this:
+
+Please login as the user "ec2-user" rather than the user "root"
+
+Which is also sparsely documented. In that case just do this:
+
+sudo ssh -i amazonec2.pem ec2-xxx-xxx-xxx-xxx.us-west-2.compute.amazonaws.com -l ec2-user
+
+And you'll get the glorious:
+
+   __|  __|_  )
+   _|  (     /   Amazon Linux AMI
+  ___|\___|___|
+
+************************************************************************************************************************************
+
+Did all that work, then I found this:
+
+https://ourcodeworld.com/articles/read/977/how-to-deploy-a-node-js-application-on-aws-ec2-server
+
+which led to this:
+https://cloudaffaire.com/how-to-install-git-in-aws-ec2-instance/
+sudo yum update -y
+sudo yum install git -y
+
+
+which led to this:
+https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
+
+Realized the EC2 really is just a virtual machine that I can run code on
+
+That in AWS, in the EC2 I need to use Instance Connect and I can do anything I can with any server, 
+that includes cloning Pacheco App from git using
+
+git clone https://github.com/wfparrish/PachecoInventoryApp.git
+
+Also know that the Amazon Linux machine uses RedHat yum syntax
+
+
+Ran:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+. ~/.nvm/nvm.sh
+nvm install node
+git clone https://github.com/wfparrish/PachecoInventoryApp.git
+
+and voila! Pacheco app code is on the server
+
+I will need to push from the desktop, then pull from the AWS server to update the code.
+
+***************************************************************************************************************
+
+Pacheco App will not load in the browser
+
+This tutorial:
+https://ourcodeworld.com/articles/read/977/how-to-deploy-a-node-js-application-on-aws-ec2-server
+
+
+said to put this in the browser:
+ec2-52-11-87-227.us-west-2.compute.amazonaws.com:3000
+
+after I adjusted the Pacheco App security group
+
+When I run this I get a browser that spins but never loads
+
+It's ok, if I need to I can just load a completely fresh Express App and rebuild the application.
+
+But I'd like to avoid all that and figure out why the app isn't running, I think it must be the code
+
+***************************************************************************************************************
+
+The EC2 is set up to run Pacheco app, we just need to debug or rebuild.
+If I close the server the connection will close and the server will no longer be online
+There is a way to make the server run 24/7, use PM2
+That works with Ubuntu and AWS, not sure about Amazon Linux
+
+
+------------------------------------------------------------------------------------------------------------
+
+1/17/2021
+
+Decided to set the server up locally to get a look at the app again, and try to figure out what could be 
+causing the permanently loading browser.
+
+------------------------------------------------------------------------------------------------------------
+
+1/18/2021
+
+Pacheco App runs well actually, far cleaner than I thought and a lot of functionality exists.
+I think I was waiting to get the global query created so that all instances of any panel are visible in the Yard view
+Still need to go over the notes of the development to see where I left off
+
+Interested in getting Astrego to complete the app, I think it might be the smartest way to move this forward 
+and also to make it professional.
+
+-------------------------------------------------------------------------------------------------------------------
+
+1/20/2022
+
+Astrego was fantastic, he completed the Sector and Yard queries
+
+
+*************************************************************************************************************************
+
+Found the solution to why I could not see Pacheco App in the EC2 by following this tutorial:
+https://sumantmishra.medium.com/how-to-deploy-node-js-app-on-aws-with-github-db99758294f1
+
+Pacheco App is accessible now in the browser on:
+http://52.11.87.227:3000/
+
+That is the URL I need to use in Astrego's version of the application when I load it to AWS EC2
+
+Note that this is only access to the home page, I haven't modified the code yet, but now that I have access,
+I think I'm switching straight to modifying Astrego's version, since this is working well and rather quickly
+
+***********************************************************************************************************************
+
+Next Steps:
+Update Astrego's version of Pacheco App with the http://52.11.87.227:3000/ url
+Push Astrego's version to Github
+Clone Astrego's version onto the EC2
+Test the functionality of Pacheco App from the EC2
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+1/22/2022
+
+Adding the project to a new repository on github using this as a guide:
+
+How to upload a project to Github
+https://stackoverflow.com/questions/12799719/how-to-upload-a-project-to-github
 
 
 
