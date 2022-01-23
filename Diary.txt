@@ -2882,5 +2882,6 @@ How to upload a project to Github
 https://stackoverflow.com/questions/12799719/how-to-upload-a-project-to-github
 
 
+Note: This app uses 'main' but I think I can also push to 'master', not sure yet
 
 
