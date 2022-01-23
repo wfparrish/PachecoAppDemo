@@ -39,7 +39,7 @@ document.querySelector('#control-panel__btn__2').addEventListener('click', async
             const result = results[i].sector;
             const id = `sector__link${result}`
             const sector = document.getElementById(id);
-            sector.style.backgroundColor = "red";
+            sector.style.backgroundColor = "f56d6d";
 
             console.log(sector)
 
