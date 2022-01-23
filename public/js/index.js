@@ -4,7 +4,7 @@ sectors.forEach(sector => {
 const sectorNumber = sector.children[0].textContent;
 
 sector.addEventListener('click', () => {
-        window.location.href = `http://localhost:3000/sector.html?sectornumber=${sectorNumber}`;
+        window.location.href = `http://52.11.87.227:3000/sector.html?sectornumber=${sectorNumber}`;
     });
 });
 
@@ -13,7 +13,7 @@ let results = []
 const resultLoop = async _ => {
     for (let i = 0; i < sectors.length; i++) {
         let number = i + 1;
-        const res =  await axios.get(`http://localhost:3000/api/sector${number}/panels`);
+        const res =  await axios.get(`http://52.11.87.227:3000/api/sector${number}/panels`);
         res.data.forEach(item => {
             item.sector = number
             results.push(item)

@@ -156,7 +156,7 @@
             }//end of if for readyState and status
           };//end of xhr
       
-          xhttp.open("GET", `http://localhost:3000/api/sector${sectorNumber}/stacks`, true);
+          xhttp.open("GET", `http://52.11.87.227:3000/api/sector${sectorNumber}/stacks`, true);
           xhttp.send();
         });
       
@@ -173,7 +173,7 @@
                 location.reload();
               }
             }
-            xhttp.open("DELETE", `http://localhost:3000/api/sector${sectorNumber}/stack/${rightClickedStack.id}`, true);
+            xhttp.open("DELETE", `http://52.11.87.227:3000/api/sector${sectorNumber}/stack/${rightClickedStack.id}`, true);
             xhttp.send();
           }
         });
@@ -190,7 +190,7 @@
             }
             let retrievedStack;
             let xhttp = new XMLHttpRequest();
-            xhttp.open("GET", `http://localhost:3000/api/sector${sectorNumber}/stack/${rightClickedStack.id}`, true);
+            xhttp.open("GET", `http://52.11.87.227:3000/api/sector${sectorNumber}/stack/${rightClickedStack.id}`, true);
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send();
             xhttp.onreadystatechange = function () {
@@ -225,7 +225,7 @@
             }
             let retrievedStack;
             let xhttp = new XMLHttpRequest();
-            xhttp.open("GET", `http://localhost:3000/api/sector${sectorNumber}/stack/${rightClickedStack.id}`, true);
+            xhttp.open("GET", `http://52.11.87.227:3000/api/sector${sectorNumber}/stack/${rightClickedStack.id}`, true);
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.send();
             xhttp.onreadystatechange = function () {
@@ -257,7 +257,7 @@
       
             //perform a DELETE call of the panel in the panel collection
             let xhttp1 = new XMLHttpRequest();
-            xhttp1.open('DELETE', `http://localhost:3000/api/sector${sectorNumber}/panel/${event.target.id}`, true);
+            xhttp1.open('DELETE', `http://52.11.87.227:3000/api/sector${sectorNumber}/panel/${event.target.id}`, true);
             xhttp1.send();
       
             //Remove the panel selected in the viewer for deletion from rightClickedStack
@@ -289,7 +289,7 @@
             var json = JSON.stringify(data);
       
             var xhttp2 = new XMLHttpRequest();
-            xhttp2.open("PUT", `http://localhost:3000/api/sector${sectorNumber}/stack/${rightClickedStack.id}`, true);
+            xhttp2.open("PUT", `http://52.11.87.227:3000/api/sector${sectorNumber}/stack/${rightClickedStack.id}`, true);
             xhttp2.setRequestHeader("Content-type", "application/json");
             xhttp2.onreadystatechange = function () {
               if (this.readyState == 4 && this.status == 200) {
@@ -486,7 +486,7 @@
             var json = JSON.stringify(data);
       
             var xhttp = new XMLHttpRequest();
-            xhttp.open("PUT", `http://localhost:3000/api/sector${sectorNumber}/stack/${event.target.id}`, true);
+            xhttp.open("PUT", `http://52.11.87.227:3000/api/sector${sectorNumber}/stack/${event.target.id}`, true);
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.onreadystatechange = function () {
               if (this.readyState == 4 && this.status == 200) {
@@ -509,7 +509,7 @@
           //let sectorPanels = [];
           //let sectorPanelsIds = [];
           //let xhttp1 = new XMLHttpRequest();
-          //xhttp1.open('GET', `http://localhost:3000/api/sector1/stacks`, true);
+          //xhttp1.open('GET', `http://52.11.87.227:3000/api/sector1/stacks`, true);
           //xhttp1.send();
           //xhttp1.onreadystatechange = function () {
           //if (this.readyState == 4 && this.status == 200) {
@@ -529,7 +529,7 @@
           //console.log(sectorPanelsIds)
       
           let xhttp = new XMLHttpRequest();
-          xhttp.open('GET', `http://localhost:3000/api/sector${sectorNumber}/panels`, true);
+          xhttp.open('GET', `http://52.11.87.227:3000/api/sector${sectorNumber}/panels`, true);
           xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
               let currentPanels = JSON.parse(xhttp.responseText);
@@ -615,11 +615,11 @@ sectorLinks.forEach((link, index) => {
 
     if (index === 0) {
         link.addEventListener('click', () => {
-            window.location.href = `http://localhost:3000/`;
+            window.location.href = `http://52.11.87.227:3000/`;
         });
     } else {
         link.addEventListener('click', () => {
-            window.location.href = `http://localhost:3000/sector.html?sectornumber=${sectorNumber}`;
+            window.location.href = `http://52.11.87.227:3000/sector.html?sectornumber=${sectorNumber}`;
         });
     }
 
